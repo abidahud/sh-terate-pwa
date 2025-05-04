@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Progres Ujian SH Terate - Mobile App</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png" sizes="192x192">
+  <meta name="theme-color" content="#4a90e2">
+  <style>
+    /* CSS omitted for brevity - same as provided earlier */
+    body { background: #f0f0f0; font-family: sans-serif; padding: 1em; }
+    .completed { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Progres Ujian SH Terate</h1>
+  <ul id="task-list">
+    <li class="completed" data-task="keshan">KESHAN <span class="status">Selesai</span></li>
+    <li class="completed" data-task="teknik">TEKNIK <span class="status">Selesai</span></li>
+    <li class="completed" data-task="fisik">FISIK <span class="status">Selesai</span></li>
+    <li class="completed" data-task="sambung">SAMBUNG <span class="status">Selesai</span></li>
+  </ul>
+  <button onclick="resetProgress()">Reset Progress</button>
+  <script>
+    const STORAGE_KEY = 'progresUjianSHTerate';
+    const list = document.getElementById('task-list');
+    list.addEventListener('click', (e) => {
+      const li = e.target.closest('li');
+      if (!li) return;
+      li.classList.toggle('completed');
+      li.querySelector('.status').textContent = li.classList.contains('completed') ? 'Selesai' : 'Belum';
+      saveProgress();
+    });
+    function saveProgress() {
+      const tasks = [];
+      list.querySelectorAll('li').forEach(li => {
+        tasks.push({ id: li.dataset.task, done: li.classList.contains('completed') });
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+    function loadProgress() {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!data) return;
+      data.forEach(task => {
+        const li = list.querySelector(`li[data-task="${task.id}"]`);
+        if (li) {
+          li.classList.toggle('completed', task.done);
+          li.querySelector('.status').textContent = task.done ? 'Selesai' : 'Belum';
+        }
+      });
+    }
+    function resetProgress() {
+      localStorage.removeItem(STORAGE_KEY);
+      list.querySelectorAll('li').forEach(li => {
+        li.classList.remove('completed');
+        li.querySelector('.status').textContent = 'Belum';
+      });
+    }
+    loadProgress();
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => console.log("SW terdaftar"));
+    }
+  </script>
+</body>
+</html>

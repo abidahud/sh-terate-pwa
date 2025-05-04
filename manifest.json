@@ -1,0 +1,22 @@
+
+{
+  "name": "Progres Ujian SH Terate",
+  "short_name": "SH Terate",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "description": "Pantau progres ujian SH Terate dari ponsel Anda.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
