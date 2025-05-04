@@ -1,2 +1,2 @@
 # sh-terate-pwa
-Tes Siawa PSHT Rayon Pungpungan
+Tes Siwa PSHT Rayon Pungpungan
